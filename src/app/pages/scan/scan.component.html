@@ -1,0 +1,29 @@
+<div class="flex flex-col flex-wrap sm:flex-row">
+
+    <div class="w-full flex justify-center mb-4">
+      <img src="https://www.reteacli.it/img/acli-logo80.png" width="200" />
+    </div>
+  
+    <div class="w-full">
+      <div class="mb-8">
+        <div class="w-full rounded-2xl bg-white p-4 shadow-lg">
+          <div class="rounded-lg overflow-hidden">
+            <zxing-scanner
+            [enable]="scannerEnabled"
+            (scanSuccess)="scanSuccessHandler($event)"
+            (scanError)="scanErrorHandler($event)"
+            (scanComplete)="scanCompleteHandler($event)"
+            ></zxing-scanner>
+          </div>
+        </div>
+    </div>
+
+    <div>{{ response }}</div>
+
+    <div class="flex justify-center gap-3">
+      <button class="rounded-full text-white uppercase bg-primary w-60 px-6 py-3" (click)="logAction()" *ngIf="logType == 1">Entra</button>
+      <button class="rounded-full text-white uppercase bg-accent w-60 px-6 py-3" (click)="logAction()" *ngIf="logType == 2">Esci</button>
+    </div>
+    
+  </div>
+</div>
