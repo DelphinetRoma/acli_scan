@@ -1,0 +1,35 @@
+
+<div class="text-center py-24 header">
+    <div class="container">
+        <div
+      @fadeInUp
+      class="mx-auto flex flex-col sm:flex-row gap-4 sm:gap-6 grid grid-cols-2 sm:grid-cols-4">
+      <div
+        class="bg-foreground rounded-lg">
+        <a
+          class="border text-center text-blue-600 p-6 transition duration-400 ease-out-swift cursor-pointer relative text-dark flex flex-col items-center justify-center rounded-lg"
+          matRipple
+          [routerLink]="'assign-code'"
+          routerLinkActive>
+          <mat-icon
+            svgIcon="mat:account_box"
+            class="transition duration-400 ease-out-swift icon-3xl"></mat-icon>
+          <h3 class="title mb-0 mt-4">Associa codice</h3>
+        </a>
+      </div>
+      <div
+        class="bg-foreground rounded-lg">
+        <a
+          class="border text-center text-blue-600 p-6 transition duration-400 ease-out-swift cursor-pointer relative text-dark flex flex-col items-center justify-center rounded-lg"
+          matRipple
+          [routerLink]="'send-attendees'"
+          routerLinkActive>
+          <mat-icon
+            svgIcon="mat:mail"
+            class="transition duration-400 ease-out-swift icon-3xl"></mat-icon>
+          <h3 class="title mb-0 mt-4">Invia presenze</h3>
+        </a>
+      </div>
+    </div>
+</div>
+</div>

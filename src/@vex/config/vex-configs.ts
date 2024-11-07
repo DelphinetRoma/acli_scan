@@ -158,3 +158,52 @@ export const vexConfigs: VexConfigs = {
     }
   })
 };
+
+export const acliConfig: VexConfig = {
+  id: VexConfigName.apollo,
+  name: 'Apollo',
+  bodyClass: 'vex-layout-apollo',
+  style: {
+    themeClassName: 'vex-theme-blue',
+    colorScheme: VexColorScheme.LIGHT,
+    borderRadius: {
+      value: 0.5,
+      unit: 'rem'
+    },
+    button: {
+      borderRadius: {
+        value: 9999,
+        unit: 'px'
+      }
+    }
+  },
+  direction: 'ltr',
+  imgSrc: '//vex-landing.visurel.com/assets/img/layouts/hermes.png',
+  layout: 'horizontal',
+  boxed: true,
+  sidenav: {
+    title: 'VEX',
+    imageUrl: 'assets/img/logo/logo.svg',
+    showCollapsePin: true,
+    user: {
+      visible: false
+    },
+    search: {
+      visible: false
+    },
+    state: 'expanded'
+  },
+  toolbar: {
+    fixed: false,
+    user: {
+      visible: true
+    }
+  },
+  navbar: {
+    position: 'below-toolbar'
+  },
+  footer: {
+    visible: false,
+    fixed: false
+  }
+};

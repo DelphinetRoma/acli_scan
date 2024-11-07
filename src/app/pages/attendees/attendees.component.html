@@ -1,0 +1,68 @@
+<div class="w-full h-full flex flex-col">
+    <div class="flex-none p-6">
+        <div class="flex items-center container px-0">
+            <h2 class="display-1 font-bold">
+                <span @fadeInRight class="w-full">Partecipanti</span>
+            </h2>
+            <div
+                class="hidden sm:flex items-center bg-foreground rounded-full overflow-hidden relative ltr:pl-5 rtl:pr-5 h-12 max-w-md w-full shadow-xl ml-auto"
+            >
+                <mat-icon
+                class="text-secondary flex-none"
+                svgIcon="mat:search"
+                ></mat-icon>
+                <input
+                [formControl]="searchAttendees"
+                type="text"
+                placeholder="Cerca"
+                class="border-0 h-12 outline-none ltr:pl-4 rtl:pr-4 placeholder:text-secondary bg-foreground flex-auto"
+                />
+            </div>
+        </div>
+    </div>
+
+    <div class="pt-0 overflow-hidden flex-1 flex container px-0">
+        <mat-drawer-container class="bg-transparent flex-auto flex">
+            <mat-drawer-content class="flex-auto flex items-start bg-transparent">
+                <div class="card h-full overflow-hidden flex-auto py-4 px-6">
+                    <vex-scrollbar class="h-full relative">
+                        <div class="flex flex-col justify-between">
+                            <table
+                            class="w-full flex-auto"
+                            [@stagger]="dataSource$ | async"
+                            [dataSource]="dataSource$ | async"
+                            mat-table
+                            >
+                                <ng-container matColumnDef="name">
+                                    <th mat-header-cell *matHeaderCellDef class="font-sans">Nome</th>
+                                    <td mat-cell *matCellDef="let attendee"></td>
+                                </ng-container>
+                                
+                                <ng-container matColumnDef="surname">
+                                    <th mat-header-cell *matHeaderCellDef class="font-sans">Cognome</th>
+                                    <td mat-cell *matCellDef="let attendee"></td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="columns; sticky: true"></tr>
+                                <tr @fadeInUp mat-row *matRowDef="let prod; columns: columns"></tr>
+                            </table>
+
+                            <mat-paginator
+                            #paginator
+                            class="sticky bottom-0 right-0"
+                            [length]="totalAttendees"
+                            [pageSize]="pageSubject.value.pageSize"
+                            [pageIndex]="pageSubject.value.pageIndex - 1"
+                            (page)="changePage($event)"
+                            showFirstLastButtons
+                            aria-label="Passa alla prossima pagina"
+                            >
+                            </mat-paginator>
+                        </div>
+                    </vex-scrollbar>
+                </div>
+            </mat-drawer-content>
+        </mat-drawer-container>
+    </div>
+
+</div>

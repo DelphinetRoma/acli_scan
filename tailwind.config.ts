@@ -208,6 +208,15 @@ export const themes: VexThemes = {
         }
       }
     }
+  },
+  blue: {
+    colors: {
+      primary: {
+        palette: {
+          ...colors.blue
+        }
+      }
+    }
   }
 };
 

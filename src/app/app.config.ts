@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { appRoutes } from './app.routes';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import {
+  HTTP_INTERCEPTORS,
   provideHttpClient,
   withInterceptorsFromDi
 } from '@angular/common/http';
@@ -14,8 +15,13 @@ import { provideIcons } from './core/icons/icons.provider';
 import { provideLuxon } from './core/luxon/luxon.provider';
 import { provideVex } from '@vex/vex.provider';
 import { provideNavigation } from './core/navigation/navigation.provider';
-import { vexConfigs } from '@vex/config/vex-configs';
+import { vexConfigs, acliConfig } from '@vex/config/vex-configs';
 import { provideQuillConfig } from 'ngx-quill';
+
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import { getPaginatorLabels } from './overrides/custom-paginator-labels';
+
+import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -41,7 +47,7 @@ export const appConfig: ApplicationConfig = {
        * The config that will be used by default.
        * This can be changed at runtime via the config panel or using the VexConfigService.
        */
-      config: vexConfigs.poseidon,
+      config: acliConfig,
       /**
        * Only themes that are available in the config in tailwind.config.ts should be listed here.
        * Any theme not listed here will not be available in the config panel.
@@ -87,6 +93,15 @@ export const appConfig: ApplicationConfig = {
           ['link', 'image']
         ]
       }
-    })
+    }),
+    { 
+      provide: MatPaginatorIntl,
+      useValue: getPaginatorLabels()
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    }
   ]
 };

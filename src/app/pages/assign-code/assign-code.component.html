@@ -1,0 +1,56 @@
+<div class="header">
+    <div class="container">
+        <h2 @fadeInUp class="display-2 text-center mt-16 mb-8">Assegna codice</h2>
+        <div
+        @fadeInUp
+        class="border rounded-full bg-foreground py-2 ltr:pl-6 ltr:pr-3 rtl:pr-6 rtl:pl-3 text-secondary max-w-xl mx-auto border flex items-center">
+            <mat-icon class="flex-none" svgIcon="mat:search"></mat-icon>
+            <input
+                class="border-0 ltr:ml-4 rtl:mr-4 placeholder:text-secondary subheading-2 outline-none font-normal w-0 bg-foreground flex-auto"
+                placeholder="Cerca partecipante..."
+                [formControl]="searchAttendeeControl"
+                (blur)="checkSearchValue()"
+                (keydown)="checkSearchValue()"
+                type="text" />
+            <button
+                class="rounded-full flex-none"
+                color="primary"
+                mat-flat-button
+                type="button"
+                (click)="searchAttendee()"
+                [disabled]="!searchable">
+                Cerca
+            </button>
+        </div>
+
+        <div *ngIf="(loadingAttendees$ | async)" @scaleFadeIn class="flex-auto flex flex-col items-center justify-center mt-6 pb-4">
+            <mat-progress-spinner
+            diameter="40"
+            mode="indeterminate"
+            color="primary"
+            ></mat-progress-spinner>
+        </div>
+        
+        <div class="max-w-xl mt-6 mx-auto" *ngIf="!(loadingAttendees$ | async) && searched && arrAttendees.length == 0">
+            <p>Nessun partecipante trovato</p>
+        </div>
+
+        <div class="max-w-xl mt-6 mx-auto" *ngIf="!(loadingAttendees$ | async) && arrAttendees.length > 0">
+            <mat-card @fadeInUp *ngFor="let attendee of arrAttendees; let attendeeIndex = index" class="rounded-lg">
+                <mat-card-content>
+                    <div class="flex items-center">
+                        <div class="basis-4/5">
+                            <h3 class="headline">{{ attendee.surname }} {{ attendee.name }}</h3>
+                            <p class="title text-secondary">{{ attendee.idTaxCode }}</p>
+                        </div>
+                        <div class="text-center">
+                            <input type="text" restrictNumbers id="code_{{attendeeIndex}}" class="w-20 h-20 text-center text-2xl text-blue-600 rounded-lg border border-primary-600">
+                            <button mat-button color="primary" class="mt-4">Assegna codice</button>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+  
+    </div>
+</div>

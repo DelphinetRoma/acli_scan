@@ -1,0 +1,54 @@
+<div class="w-full h-full bg-gradient flex flex-col items-center justify-center">
+    <div @fadeInUp class="card overflow-hidden w-full max-w-md">
+      <div class="p-6 pb-0 flex flex-col items-center justify-center">
+        <div class="fill-current flex flex-col items-center justify-center">
+          <img width="200" src="assets/img/logo/acli-logo80.png" />
+        </div>
+      </div>
+  
+      <div class="text-center mt-4">
+        <!-- <h2 class="title m-0">Benvenuto in AppEDR</h2> -->
+        <h4 class="body-2 text-secondary m-0">
+          Inserisci le tue credenziali
+        </h4>
+      </div>
+  
+      <form [formGroup]="loginForm" class="p-6 flex flex-col gap-4">
+  
+        <div class="flex flex-col">
+  
+          <mat-form-field class="flex-1 mb-2">
+            <mat-label>E-Mail</mat-label>
+            <input formControlName="email" matInput autocomplete="off" required />
+            <mat-error *ngIf="loginForm.controls.email.hasError('required')">Questo campo è obbligatorio</mat-error>
+            <mat-error *ngIf="loginForm.controls.email.hasError('email')">Inserisci un email valida</mat-error>
+          </mat-form-field>
+  
+          <mat-form-field class="flex-1 mb-2">
+            <mat-label>Password</mat-label>
+            <input
+              [type]="inputType"
+              formControlName="password"
+              autocomplete="off"
+              matInput
+              required />
+            <button
+              (click)="togglePwdVisibility()"
+              mat-icon-button
+              matIconSuffix
+              matTooltip="Mostra/nascondi password"
+              type="button">
+              <mat-icon *ngIf="pwdVisible" svgIcon="mat:visibility"></mat-icon>
+              <mat-icon *ngIf="!pwdVisible" svgIcon="mat:visibility_off"></mat-icon>
+            </button>
+            
+            <mat-error *ngIf="loginForm.controls['password'].hasError('required')">Questo campo è obbligatorio</mat-error>
+            <mat-error *ngIf="loginForm.controls['password'].hasError('minlength')">La password deve contenere almeno 6 caratteri</mat-error>
+          </mat-form-field>
+        </div>
+  
+        <button color="primary" mat-raised-button (click)="doLogin(loginForm.value)" [disabled]="loginForm.invalid">Accedi</button>
+      </form>
+    </div>
+  </div>
+  

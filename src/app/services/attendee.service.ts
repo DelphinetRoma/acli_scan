@@ -46,4 +46,23 @@ export class AttendeeService {
       finalize(() => this.saveScanningLoading.next(false))
     )
   }
+
+  searchAttendeeLoading = new BehaviorSubject<boolean>(false);
+  searchAttendeeLoading$ = this.searchAttendeeLoading.asObservable();
+
+  getAttendee(search:any) {
+
+    this.searchAttendeeLoading.next(true);
+
+    const payload = {
+      search: search
+    };
+
+    return this._http.post<any>(`${environment.apiEndpoint}/admin/get_partecipant`, payload).pipe(
+      map((attendees:any)=>{
+        return attendees;
+      }),
+      finalize(() => this.searchAttendeeLoading.next(false))
+    )
+  }
 }

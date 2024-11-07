@@ -16,7 +16,7 @@ import { AttendeeService } from 'src/app/services/attendee.service';
 })
 export class ScanComponent {
 
-  constructor(
+  constructor (
     private _snackBar: MatSnackBar,
     private _attendeeService: AttendeeService
   ) {}
@@ -26,6 +26,8 @@ export class ScanComponent {
   attendee: any;
   attendeeHash: string = "";
   attendeeOK: boolean = false;
+
+  logType: number = 0;
 
   scanSuccessHandler(event:any) {
     console.log('success', event);
@@ -54,6 +56,7 @@ export class ScanComponent {
               this.attendee = state.response.name+" "+state.response.surname;
               this.attendeeHash = hash;
               this.attendeeOK = true;
+              this.logType = state.response.state;
               break;
             case 401:
               const errorSnackBar = this._snackBar.open("Utente non trovato", "Chiudi", {
