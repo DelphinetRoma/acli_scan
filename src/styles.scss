@@ -15,6 +15,38 @@
   in Chrome/Firefox DevTools
 */
 
+:root {
+
+  .px-4 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .snackbar-warning{
+    .mdc-snackbar__surface{
+      @apply bg-orange-600
+    }
+    .mat-mdc-button.mat-mdc-snack-bar-action:not(:disabled) {
+      @apply font-semibold text-white
+      }
+    .mat-mdc-snack-bar-label {
+      @apply text-white
+    }
+  }
+  
+  .snackbar-success {
+    .mdc-snackbar__surface {
+      @apply bg-emerald-600
+    }
+    .mat-mdc-button.mat-mdc-snack-bar-action:not(:disabled) {
+      @apply font-semibold text-white
+      }
+    .mat-mdc-snack-bar-label {
+      @apply text-white
+    }
+  }
+}
+
 /**
   Uncomment the below code and adjust the values to fit your colors, the application will automatically adjust
  */
@@ -27,4 +59,16 @@ html {
 
   // --vex-color-warn: yellow;
   // --vex-color-warn-contrast: black;
+}
+
+.snackbar-danger{
+  .mdc-snackbar__surface{
+    @apply bg-red-600
+  }
+  .mat-mdc-button.mat-mdc-snack-bar-action:not(:disabled) {
+    @apply font-semibold text-white
+    }
+  .mat-mdc-snack-bar-label {
+    @apply text-white
+  }
 }

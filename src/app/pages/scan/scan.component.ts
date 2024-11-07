@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatButtonModule } from '@angular/material/button';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 
 import { AttendeeService } from 'src/app/services/attendee.service';
@@ -8,58 +10,100 @@ import { AttendeeService } from 'src/app/services/attendee.service';
 @Component({
   selector: 'scan',
   standalone: true,
-  imports: [CommonModule, ZXingScannerModule],
+  imports: [CommonModule, MatSnackBarModule, MatButtonModule, ZXingScannerModule],
   templateUrl: './scan.component.html',
   styleUrls: ['./scan.component.scss']
 })
 export class ScanComponent {
 
   constructor(
+    private _snackBar: MatSnackBar,
     private _attendeeService: AttendeeService
   ) {}
 
   scannerEnabled: boolean = true;
 
-  response: any;
-  logType: number = 0;
+  attendee: any;
+  attendeeHash: string = "";
+  attendeeOK: boolean = false;
 
   scanSuccessHandler(event:any) {
     console.log('success', event);
-    
-    this.scannerEnabled = false;
-
-    this._attendeeService.geState(event).subscribe(
-      (state) => {
-        switch(state.code) {
-          case 200:
-            this.logType = state.response[0].state;
-            this.response = "Benvenuto "+state.response[0].name+" "+state.response[0].surname;
-            break;
-          case 401:
-            alert('User not found!');
-            break;
-        }
-      }
-    );
   }
 
   scanErrorHandler(event:any) {
     console.log('error', event);
-    this.response = 'error ' + event;
   }
 
   scanCompleteHandler(event:any) {
+
+    this.attendeeHash = "";
+
     if (event) {
       console.log('complete', event);
-      this.response = 'complete ' + event;
+    
+      const hash = event.text;
+      //const hash = "bacc29bae59aa76b22e04a6496ccc06eaa8b44bf09bd27d313e9f4a90b3673a5";
+
+      this.scannerEnabled = false;
+  
+      this._attendeeService.geState(hash).subscribe(
+        (state) => {
+          switch(state.code) {
+            case 200:
+              this.attendee = state.response.name+" "+state.response.surname;
+              this.attendeeHash = hash;
+              this.attendeeOK = true;
+              break;
+            case 401:
+              const errorSnackBar = this._snackBar.open("Utente non trovato", "Chiudi", {
+                duration: 5000,
+                panelClass: "snackbar-danger",
+                horizontalPosition: "center",
+              });
+
+              errorSnackBar.onAction().subscribe(() => {
+                this.scannerEnabled = true;
+              });
+              break;
+          }
+        }
+      );
     }
   }
 
-  logAction() {
+  nextScan() {
     // Save Scanning POST
     // chiamata API scrittura tipologia ultima scansione
     // OK -> riabilita scanner
 
-    // KO -> alert errore
+    const hash = this.attendeeHash;
+
+    this._attendeeService.saveScanning(hash).subscribe(
+      (scanning:any) => {
+        switch(scanning.code) {
+          case 200:
+
+            this.attendee = "";
+            this.attendeeHash = "";
+            this.attendeeOK = false;
+
+            this.scannerEnabled = true;
+
+            break;
+          case 401:
+            const errorSnackBar = this._snackBar.open("Utente non trovato", "Chiudi", {
+              duration: 5000,
+              panelClass: "snackbar-danger",
+              horizontalPosition: "center",
+            });
+
+            errorSnackBar.onAction().subscribe(() => {
+              this.scannerEnabled = true;
+            });
+            break;
+        }
+      }
+    );
   }
 }

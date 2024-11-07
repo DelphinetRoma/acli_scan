@@ -27,4 +27,23 @@ export class AttendeeService {
       finalize(() => this.stateLoading.next(false))
     )
   }
+
+  saveScanningLoading = new BehaviorSubject<boolean>(false);
+  saveScanningLoading$ = this.saveScanningLoading.asObservable();
+
+  saveScanning(hash:string) {
+
+    this.saveScanningLoading.next(true);
+
+    const payload = {
+      code: hash
+    };
+
+    return this._http.post<any>(`${environment.apiEndpoint}/save_scanning`, payload).pipe(
+      map((scanning:any)=>{
+        return scanning;
+      }),
+      finalize(() => this.saveScanningLoading.next(false))
+    )
+  }
 }

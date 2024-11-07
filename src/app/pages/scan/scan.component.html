@@ -5,8 +5,13 @@
     </div>
   
     <div class="w-full">
-      <div class="mb-8">
-        <div class="w-full rounded-2xl bg-white p-4 shadow-lg">
+      <div class="mb-8 px-4">
+        <div class="w-full flex flex-col justify-center rounded-2xl bg-white p-4 shadow-lg">
+
+          <div class="absolute" *ngIf="attendeeOK">
+            <h2 class="headline">Benvenuto,<br><span class="font-semibold">{{ attendee }}</span></h2>
+          </div>
+
           <div class="rounded-lg overflow-hidden">
             <zxing-scanner
             [enable]="scannerEnabled"
@@ -18,11 +23,8 @@
         </div>
     </div>
 
-    <div>{{ response }}</div>
-
     <div class="flex justify-center gap-3">
-      <button class="rounded-full text-white uppercase bg-primary w-60 px-6 py-3" (click)="logAction()" *ngIf="logType == 1">Entra</button>
-      <button class="rounded-full text-white uppercase bg-accent w-60 px-6 py-3" (click)="logAction()" *ngIf="logType == 2">Esci</button>
+      <button mat-raised-button color="primary" class="rounded-full" (click)="nextScan()" *ngIf="attendeeOK">Scansiona</button>
     </div>
     
   </div>
