@@ -17,6 +17,7 @@ import { NumberRestricDirective } from "src/app/directives/number-restrict.direc
 
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from "@vex/animations/scale-fade-in.animation";
+import { stagger40ms } from '@vex/animations/stagger.animation';
 
 @Component({
   selector: 'assign-code',
@@ -33,7 +34,7 @@ import { scaleFadeIn400ms } from "@vex/animations/scale-fade-in.animation";
     MatProgressSpinnerModule,
     NumberRestricDirective
   ],
-  animations: [fadeInUp400ms,scaleFadeIn400ms],
+  animations: [fadeInUp400ms,scaleFadeIn400ms,stagger40ms],
 })
 export class AssignCodeComponent {
 

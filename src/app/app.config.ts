@@ -10,7 +10,7 @@ import {
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
-import { MatNativeDateModule } from '@angular/material/core';
+import { DateAdapter, MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import { provideIcons } from './core/icons/icons.provider';
 import { provideLuxon } from './core/luxon/luxon.provider';
 import { provideVex } from '@vex/vex.provider';
@@ -20,11 +20,17 @@ import { provideQuillConfig } from 'ngx-quill';
 
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { getPaginatorLabels } from './overrides/custom-paginator-labels';
+import { CustomDateAdapter } from './overrides/custom-date-adapter';
+
+import localeIT from '@angular/common/locales/it';
+import { registerLocaleData } from '@angular/common';
+registerLocaleData(localeIT);
 
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'it-IT' },
     importProvidersFrom(
       BrowserModule,
       MatDialogModule,
@@ -98,6 +104,7 @@ export const appConfig: ApplicationConfig = {
       provide: MatPaginatorIntl,
       useValue: getPaginatorLabels()
     },
+    { provide: DateAdapter, useClass: CustomDateAdapter }, 
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

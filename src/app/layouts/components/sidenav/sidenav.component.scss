@@ -1,5 +1,6 @@
 .vex-sidenav {
-  background: var(--vex-sidenav-background);
+  // background: var(--vex-sidenav-background);
+  background: linear-gradient(-45deg, #0084CA, #0C3182);
   color: var(--vex-sidenav-color);
   height: 100%;
   @apply transition-all duration-400 ease-out-swift;
@@ -76,14 +77,14 @@
 
 /** SIDENAV TOOLBAR */
 .vex-sidenav-toolbar__container {
-  background: var(--vex-sidenav-background);
+  // background: var(--vex-sidenav-background);
 
   @apply sticky top-0 z-10;
 }
 
 .sidenav-toolbar {
   align-items: center;
-  background: var(--vex-sidenav-toolbar-background);
+  // background: var(--vex-sidenav-toolbar-background);
   box-sizing: border-box;
   display: flex;
   flex-direction: row;

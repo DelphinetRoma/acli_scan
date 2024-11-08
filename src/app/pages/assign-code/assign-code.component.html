@@ -1,6 +1,6 @@
 <div class="header">
     <div class="container">
-        <h2 @fadeInUp class="display-2 text-center mt-16 mb-8">Assegna codice</h2>
+        <h2 @fadeInUp class="display-2 text-center text-blue-600 mt-16 mb-8">Assegna codice</h2>
         <div
         @fadeInUp
         class="border rounded-full bg-foreground py-2 ltr:pl-6 ltr:pr-3 rtl:pr-6 rtl:pl-3 text-secondary max-w-xl mx-auto border flex items-center">
@@ -31,25 +31,21 @@
             ></mat-progress-spinner>
         </div>
         
-        <div class="max-w-xl mt-6 mx-auto" *ngIf="!(loadingAttendees$ | async) && searched && arrAttendees.length == 0">
-            <p>Nessun partecipante trovato</p>
-        </div>
+        <p *ngIf="!(loadingAttendees$ | async) && searched && arrAttendees.length == 0" @scaleFadeIn class="text-center text-hint title font-normal italic mt-4">Nessun partecipante trovato</p>
 
-        <div class="max-w-xl mt-6 mx-auto" *ngIf="!(loadingAttendees$ | async) && arrAttendees.length > 0">
-            <mat-card @fadeInUp *ngFor="let attendee of arrAttendees; let attendeeIndex = index" class="rounded-lg">
-                <mat-card-content>
-                    <div class="flex items-center">
-                        <div class="basis-4/5">
-                            <h3 class="headline">{{ attendee.surname }} {{ attendee.name }}</h3>
-                            <p class="title text-secondary">{{ attendee.idTaxCode }}</p>
-                        </div>
-                        <div class="text-center">
-                            <input type="text" restrictNumbers id="code_{{attendeeIndex}}" class="w-20 h-20 text-center text-2xl text-blue-600 rounded-lg border border-primary-600">
-                            <button mat-button color="primary" class="mt-4">Assegna codice</button>
-                        </div>
+        <div class="h-full flex flex-col gap-4 container py-6" *ngIf="!(loadingAttendees$ | async) && arrAttendees.length > 0">
+            <div @stagger class="border p-6 transition duration-400 ease-out-swift relative text-dark flex flex-col rounded-lg bg-foreground" *ngFor="let attendee of arrAttendees; let attendeeIndex = index">
+                <div class="flex items-center">
+                    <div class="flex-auto">
+                        <h3 class="headline">{{ attendee.surname }} {{ attendee.name }}</h3>
+                        <p class="title italic font-normal text-secondary">{{ attendee.idTaxCode }}</p>
                     </div>
-                </mat-card-content>
-            </mat-card>
+                    <div class="flex items-center gap-4 ml-auto">
+                        <input type="text" restrictNumbers id="code_{{attendeeIndex}}" class="w-20 h-20 text-center text-2xl text-blue-600 rounded-lg border border-slate-300">
+                        <button mat-button color="primary">Assegna codice</button>
+                    </div>
+                </div>
+            </div>
         </div>
   
     </div>

@@ -1,23 +1,33 @@
 <div class="flex flex-col flex-wrap sm:flex-row">
 
-    <div class="w-full flex justify-center mb-4">
-      <img src="assets/img/logo/acli-logo80.png" width="200" />
+    <div class="w-full flex justify-center mt-4 mb-4">
+      <img src="assets/img/logo/acli-logo80.png" width="150" />
     </div>
   
     <div class="w-full">
       <div class="mb-8 px-4">
-        <div class="w-full flex flex-col justify-center rounded-2xl bg-white p-4 shadow-lg" [ngClass]="{
-          'bg-green-600 text-white': attendeeOK,
-          'bg-red-600 text-white': !attendeeOK && !scannerEnabled
+        <div class="w-full flex flex-col justify-center rounded-2xl p-4 shadow-lg" [ngClass]="{
+          'bg-green-600 text-white': scanned && attendeeOK,
+          'bg-red-600 text-white': scanned && !attendeeOK
         }">
 
-          <div class="absolute" *ngIf="attendeeOK">
-            <h2 class="headline">{{ logType == 1 ? 'Benvenuto': logType == 2 ? 'Arrivederci':'' }},<br><span class="font-semibold">{{ attendee }}</span></h2>
+          <div *ngIf="scanning" @scaleFadeIn class="flex-auto flex flex-col items-center h-full justify-center mt-6 pb-4">
+            <mat-progress-spinner
+            diameter="40"
+            mode="indeterminate"
+            color="primary"
+            ></mat-progress-spinner>
           </div>
 
-          <div class="absolute" *ngIf="!attendeeOK && !scannerEnabled">
-            <h2 class="headline">Partecipante non trovato</h2>
-          </div>
+          <ng-container *ngIf="scanned">
+            <div class="absolute" *ngIf="attendeeOK">
+              <h2 class="headline">{{ logType == 1 ? 'Benvenuto': logType == 2 ? 'Arrivederci':'' }},<br><span class="font-semibold">{{ attendee }}</span></h2>
+            </div>
+
+            <div class="absolute" *ngIf="!attendeeOK">
+              <h2 class="headline">Partecipante non trovato</h2>
+            </div>
+          </ng-container>
 
           <div class="rounded-lg overflow-hidden">
             <zxing-scanner
@@ -31,7 +41,7 @@
     </div>
 
     <div class="flex justify-center gap-3">
-      <button mat-raised-button color="primary" class="rounded-full" (click)="nextScan()" *ngIf="attendeeOK">Scansiona</button>
+      <button mat-raised-button color="primary" class="rounded-full" (click)="nextScan()" *ngIf="scanned">Prossima scansione</button>
     </div>
     
   </div>

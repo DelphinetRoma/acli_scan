@@ -21,18 +21,23 @@ export class NavigationLoaderService {
   loadNavigation(): void {
     this._items.next([
       {
-        type: 'subheading',
-        label: 'Dashboards',
-        children: [
-          {
-            type: 'link',
-            label: 'Analytics',
-            route: '/',
-            icon: 'mat:insights',
-            routerLinkActiveOptions: { exact: true }
-          }
-        ]
+        type: 'link',
+        label: 'Dashboard',
+        route: '/',
+        routerLinkActiveOptions: { exact: true }
       },
+      {
+        type: 'link',
+        label: 'Assegna codice',
+        route: '/assign-code',
+        routerLinkActiveOptions: { exact: true }
+      },
+      {
+        type: 'link',
+        label: 'Invia presenze',
+        route: '/send-attendees',
+        routerLinkActiveOptions: { exact: true }
+      }
     ]);
   }
 }

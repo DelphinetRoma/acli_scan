@@ -65,4 +65,23 @@ export class AttendeeService {
       finalize(() => this.searchAttendeeLoading.next(false))
     )
   }
+
+  searchAttendeeByDatetimeLoading = new BehaviorSubject<boolean>(false);
+  searchAttendeeByDatetimeLoading$ = this.searchAttendeeByDatetimeLoading.asObservable();
+
+  searchAttendeesByDatetime(dateTime:any) {
+
+    this.searchAttendeeByDatetimeLoading.next(true);
+
+    const payload = {
+      date: dateTime
+    };
+
+    return this._http.post<any>(`${environment.apiEndpoint}/admin/get_presents`, payload).pipe(
+      map((attendees:any)=>{
+        return attendees;
+      }),
+      finalize(() => this.searchAttendeeByDatetimeLoading.next(false))
+    )
+  }
 }

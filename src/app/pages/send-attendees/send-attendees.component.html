@@ -1,1 +1,74 @@
-<p>send-attendees works!</p>
+<div class="header">
+    <div class="container">
+        <h2 @fadeInUp class="display-2 text-center text-blue-600 mt-16 mb-8">Invia presenze</h2>
+
+        <form [formGroup]="sendAttendeesForm">
+
+            <div @fadeInUp class="p-3 py-2 text-secondary max-w-xl mx-auto flex items-center gap-4">
+                <mat-form-field appearance="outline" class="w-full">
+                    <mat-label class="font-semibold">Data</mat-label>
+                    <input type="text" matInput [matDatepicker]="datePicker" (click)="datePicker.open()" formControlName="date" />
+                    <mat-datepicker-toggle matIconSuffix [for]="datePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #datePicker></mat-datepicker>
+                    <!-- <mat-error *ngIf="sendAttendeesForm.controls['date'].hasError('required')">Campo obbligatorio</mat-error> -->
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="w-full">
+                    <mat-label class="font-semibold">Ora</mat-label>
+                    <input
+                        matInput
+                        type="text"
+                        autocomplete="off"
+                        placeholder="hh:mm"
+                        formControlName="time"
+                        mask="Hh:m0" [showMaskTyped]="true" [dropSpecialCharacters]="false" [leadZeroDateTime]="true"
+                    />
+                    <!-- <mat-error *ngIf="sendAttendeesForm.controls['time'].hasError('required')">Campo obbligatorio</mat-error> -->
+                </mat-form-field>
+                <button
+                    class="rounded-full flex-none"
+                    color="primary"
+                    mat-flat-button
+                    type="button"
+                    (click)="searchAttendeesByDatetime(sendAttendeesForm.value)"
+                    >
+                    Cerca
+                </button>
+            </div>
+        </form>
+
+        <div *ngIf="(loadingAttendees$ | async)" @scaleFadeIn class="flex-auto flex flex-col items-center justify-center mt-6 pb-4">
+            <mat-progress-spinner
+            diameter="40"
+            mode="indeterminate"
+            color="primary"
+            ></mat-progress-spinner>
+        </div>
+
+        <p *ngIf="!(loadingAttendees$ | async) && searched && arrAttendees.length == 0" @scaleFadeIn class="text-center text-hint title font-normal italic mt-4">Nessun partecipante trovato</p>
+
+        <div class="h-full flex flex-col gap-4 container py-6 bg-foreground rounded-md" *ngIf="!(loadingAttendees$ | async) && arrAttendees.length > 0">
+            <table>
+                <thead>
+                    <th>Cognome</th>
+                    <th>Nome</th>
+                    <th>Codice Fiscale</th>
+                    <th>Entrata</th>
+                    <th>Uscita</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let attendee of arrAttendees">
+                        <td>{{ attendee.surname }}</td>
+                        <td>{{ attendee.name }}</td>
+                        <td>{{ attendee.idTaxCode }}</td>
+                        <td>{{ attendee.date_start | date: "dd/MM/yyyy HH:mm:ss" }}</td>
+                        <td>{{ attendee.date_end | date: "dd/MM/yyyy HH:mm:ss" }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="flex justify-end mt-4">
+                <button mat-raised-button color="primary" (click)="downloadAttendeesList()">Scarica lista partecipanti</button>
+            </div>
+        </div>
+    </div>
+</div>

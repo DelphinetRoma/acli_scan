@@ -9,7 +9,7 @@
     <mat-icon svgIcon="mat:menu"></mat-icon>
   </button>
 
-  <a
+  <!-- <a
     *ngIf="isVerticalLayout$ | async"
     [routerLink]="['/']"
     class="ltr:mr-4 rtl:ml-4 flex items-center">
@@ -22,9 +22,9 @@
       class="text-2xl font-bold tracking-wide ltr:pl-4 rtl:pr-4 m-0 select-none">
       {{ title$ | async }}
     </h1>
-  </a>
+  </a> -->
 
-  <button
+  <!-- <button
     *ngIf="isHorizontalLayout$ | async"
     [class.hidden]="!(isDesktop$ | async)"
     [matMenuTriggerFor]="addNewMenu"
@@ -32,9 +32,9 @@
     mat-flat-button
     type="button">
     Add New
-  </button>
+  </button> -->
 
-  <mat-menu
+  <!-- <mat-menu
     #addNewMenu="matMenu"
     [overlapTrigger]="false"
     xPosition="after"
@@ -58,9 +58,9 @@
       <mat-icon svgIcon="mat:ballot"></mat-icon>
       <span>Add Document</span>
     </button>
-  </mat-menu>
+  </mat-menu> -->
 
-  <mat-menu #documentMenu="matMenu">
+  <!-- <mat-menu #documentMenu="matMenu">
     <button mat-menu-item>
       <mat-icon svgIcon="mat:description"></mat-icon>
       <span>Add Quote</span>
@@ -75,9 +75,9 @@
       <mat-icon svgIcon="mat:receipt"></mat-icon>
       <span>Add Receipt</span>
     </button>
-  </mat-menu>
+  </mat-menu> -->
 
-  <div #megaMenuOriginRef class="ltr:ml-2 rtl:mr-2">
+  <!-- <div #megaMenuOriginRef class="ltr:ml-2 rtl:mr-2">
     <button
       (click)="openMegaMenu(megaMenuOriginRef)"
       *ngIf="isHorizontalLayout$ | async"
@@ -89,7 +89,7 @@
       <span>Mega Menu</span>
       <mat-icon class="icon-sm" svgIcon="mat:arrow_drop_down"></mat-icon>
     </button>
-  </div>
+  </div> -->
 
   <div
     *ngIf="(isVerticalLayout$ | async) && (isNavbarInToolbar$ | async)"
@@ -103,33 +103,54 @@
   <span class="flex-1"></span>
 
   <div class="-mx-1 flex items-center">
-    <div class="px-1">
+    <!-- <div class="px-1">
       <button (click)="openSearch()" mat-icon-button type="button">
         <mat-icon color="primary" svgIcon="mat:search"></mat-icon>
       </button>
-    </div>
+    </div> -->
 
-    <div class="px-1">
+    <!-- <div class="px-1">
       <vex-toolbar-notifications></vex-toolbar-notifications>
+    </div> -->
+
+    <!-- <div class="px-1">
+      <button (click)="openQuickpanel()" mat-icon-button type="button">
+        <mat-icon color="primary" svgIcon="mat:bookmarks"></mat-icon>
+      </button>
+    </div> -->
+
+    <!-- <div class="px-1">
+      <button [matMenuTriggerFor]="languageMenu" mat-icon-button type="button">
+        <mat-icon svgIcon="flag:united-states"></mat-icon>
+      </button>
+    </div> -->
+
+    <div *ngIf="userVisible$ | async" class="px-1">
+      <!-- <vex-toolbar-user></vex-toolbar-user> -->
+
+      <div
+        #originRef
+        class="flex items-center rounded relative transition duration-400 ease-out-swift select-none py-1 pr-2 pl-4"
+        matRipple>
+        <!-- <div
+        class="rounded-full h-9 w-9 flex items-center justify-center text-primary-600 bg-primary-600/10">
+        <mat-icon svgIcon="mat:person"></mat-icon>
+      </div> -->
+      <div
+        class="body-1 font-medium leading-snug ml-3 hidden sm:block">
+        David Smith
+      </div>
+      </div>
+
     </div>
 
     <div class="px-1">
       <button (click)="openQuickpanel()" mat-icon-button type="button">
-        <mat-icon color="primary" svgIcon="mat:bookmarks"></mat-icon>
+        <mat-icon class="text-red-600" svgIcon="mat:exit_to_app"></mat-icon>
       </button>
-    </div>
+    </div> 
 
-    <div class="px-1">
-      <button [matMenuTriggerFor]="languageMenu" mat-icon-button type="button">
-        <mat-icon svgIcon="flag:united-states"></mat-icon>
-      </button>
-    </div>
-
-    <div *ngIf="userVisible$ | async" class="px-1">
-      <vex-toolbar-user></vex-toolbar-user>
-    </div>
-
-    <mat-menu
+    <!-- <mat-menu
       #languageMenu="matMenu"
       overlapTrigger="false"
       xPosition="before"
@@ -143,7 +164,7 @@
         <mat-icon svgIcon="flag:germany"></mat-icon>
         <span>German</span>
       </button>
-    </mat-menu>
+    </mat-menu> -->
   </div>
 </div>
 

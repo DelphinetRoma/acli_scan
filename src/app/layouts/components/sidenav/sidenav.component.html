@@ -5,15 +5,15 @@
   [class.open]="collapsed && (collapsedOpen$ | async)"
   class="vex-sidenav flex flex-col">
   <div class="vex-sidenav-toolbar__container">
-    <div class="sidenav-toolbar flex-none flex items-center">
+    <div class="sidenav-toolbar flex-none flex items-center justify-center">
       <img
-        [src]="imageUrl$ | async"
-        alt="Logo"
-        class="w-6 select-none flex-none" />
-      <h2 class="vex-sidenav-toolbar__headline flex-auto">
+        src="assets/img/logo/acli-logo80_white.png"
+        alt="Acli- 80storie"
+        class="select-none flex-none" width="69" />
+      <!-- <h2 class="vex-sidenav-toolbar__headline flex-auto">
         {{ title$ | async }}
-      </h2>
-      <button
+      </h2> -->
+      <!-- <button
         (click)="toggleCollapse()"
         *ngIf="showCollapsePin$ | async"
         class="vex-sidenav-toolbar__collapse-toggle -mr-4 leading-none flex-none hidden lg:block"
@@ -27,7 +27,7 @@
           *ngIf="collapsed"
           class="icon-xs"
           svgIcon="mat:radio_button_unchecked"></mat-icon>
-      </button>
+      </button> -->
     </div>
 
     <div *ngIf="searchVisible$ | async" class="vex-sidenav-search__container">
@@ -57,13 +57,13 @@
         [level]="0"></vex-sidenav-item>
     </div>
 
-    <div
+    <!-- <div
       class="vex-sidenav-footer flex items-center justify-center opacity-20 px-6 py-6 select-none flex-none">
       <img [src]="imageUrl$ | async" alt="Logo" class="w-8 select-none" />
-    </div>
+    </div> -->
   </vex-scrollbar>
 
-  <div
+  <!-- <div
     *ngIf="userVisible$ | async"
     class="vex-sidenav-user__container flex-none">
     <div
@@ -85,5 +85,5 @@
         class="vex-sidenav-user__dropdown-icon flex-none"
         svgIcon="mat:arrow_drop_down"></mat-icon>
     </div>
-  </div>
+  </div> -->
 </div>
