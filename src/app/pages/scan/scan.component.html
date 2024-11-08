@@ -1,13 +1,15 @@
-<div class="flex flex-col flex-wrap sm:flex-row">
+<div class="flex flex-col flex-wrap sm:flex-row h-full">
 
+    <!-- LOGO -->
     <div class="w-full flex justify-center mt-4 mb-4">
-      <img src="assets/img/logo/acli-logo80.png" width="150" />
+      <img src="assets/img/logo/acli-logo80.png" width="100" />
     </div>
   
     <div class="w-full">
       <div class="mb-8 px-4">
         <div class="w-full flex flex-col justify-center rounded-2xl p-4 shadow-lg" [ngClass]="{
-          'bg-green-600 text-white': scanned && attendeeOK,
+          'bg-green-600 text-white': scanned && attendeeOK && logType == 1,
+          'bg-orange-600 text-white': scanned && attendeeOK && logType == 2,
           'bg-red-600 text-white': scanned && !attendeeOK
         }">
 
@@ -21,7 +23,7 @@
 
           <ng-container *ngIf="scanned">
             <div class="absolute" *ngIf="attendeeOK">
-              <h2 class="headline">{{ logType == 1 ? 'Benvenuto': logType == 2 ? 'Arrivederci':'' }},<br><span class="font-semibold">{{ attendee }}</span></h2>
+              <h2 class="headline">Ciao,<br><span class="font-semibold">{{ attendee }}</span></h2>
             </div>
 
             <div class="absolute" *ngIf="!attendeeOK">
@@ -31,18 +33,39 @@
 
           <div class="rounded-lg overflow-hidden">
             <zxing-scanner
+            #scanner
+            [device]="scannerDevice"
             [enable]="scannerEnabled"
+            (camerasFound)="setCamera($event)"
             (scanSuccess)="scanSuccessHandler($event)"
             (scanError)="scanErrorHandler($event)"
             (scanComplete)="scanCompleteHandler($event)"
             ></zxing-scanner>
           </div>
         </div>
+      </div>
+
+      <div *ngIf="scanned && logType == 2" class="mb-4 px-4">
+        <p class="title">Ci risulta tu sia già entrato in sala, confermi di voler uscire?</p>
+      </div>
+
+      <!-- <div class="px-4">
+        <p>logType: {{ logType }}</p>
+        <p>attendeeOK: {{ attendeeOK }}</p>
+        <p>scanned: {{ scanned }}</p>
+        <p>scannerEnabled: {{ scannerEnabled }}</p>
+        <button mat-button (click)="scanCompleteHandler({text:'ABC'})">Scan</button>
+      </div> -->
     </div>
 
-    <div class="flex justify-center gap-3">
-      <button mat-raised-button color="primary" class="rounded-full" (click)="nextScan()" *ngIf="scanned">Prossima scansione</button>
+    <!-- CTAs -->
+    <div class="flex flex-col justify-center gap-4 px-4">
+      <button mat-raised-button color="primary" class="rounded-full h-12 title" (click)="nextScan()" *ngIf="scanned && !attendeeOK">Prossima scansione</button>
+      <button mat-raised-button color="primary" class="rounded-full h-12 title" (click)="confirmScan()" *ngIf="scanned && attendeeOK">{{ logType == 1 ? 'Entra': logType == 2 ? 'Esci':'' }}</button>
+    </div>
+
+    <div class="flex flex-col justify-center gap-4 px-4 mt-auto mb-4">
+      <button mat-stroked-button color="primary" class="rounded-full h-12 title" (click)="nextScan()" *ngIf="scanned && attendeeOK && logType == 2">Annulla</button>
     </div>
     
-  </div>
 </div>

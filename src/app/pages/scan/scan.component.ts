@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 
-import { ZXingScannerModule } from '@zxing/ngx-scanner';
+import { ZXingScannerComponent, ZXingScannerModule } from '@zxing/ngx-scanner';
 
 import { AttendeeService } from 'src/app/services/attendee.service';
 
@@ -46,6 +46,15 @@ export class ScanComponent {
 
   scanErrorHandler(event:any) {
     // console.log('error', event);
+  }
+
+  @ViewChild('scanner', { static: false })
+  scanner!: ZXingScannerComponent;
+  scannerDevice: any;
+
+  setCamera(event:any) {
+    const devices =  event; // or subscribe
+    this.scannerDevice = devices.find((f:any) => (/back|trás|rear|traseira|environment|ambiente/gi.test(f.label))) ?? devices.pop(); 
   }
 
   scanCompleteHandler(event:any) {
@@ -92,7 +101,7 @@ export class ScanComponent {
     }
   }
 
-  nextScan() {
+  confirmScan() {
     // Save Scanning POST
     // chiamata API scrittura tipologia ultima scansione
     // OK -> riabilita scanner
@@ -126,5 +135,13 @@ export class ScanComponent {
         this.scannerEnabled = true;
       }
     );
+  }
+
+  nextScan() {
+    this.attendee = "";
+    this.attendeeHash = "";
+    this.attendeeOK = false;
+    this.scanned = false;
+    this.scannerEnabled = true;
   }
 }
